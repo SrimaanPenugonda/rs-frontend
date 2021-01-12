@@ -11,11 +11,17 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      mkdir publish
+      cp -r static localhost.conf publish
+  
 - task: UniversalPackages@0
   inputs:
     command: 'publish'
-    publishDirectory: '$(Build.SourcesDirectory)'
+    publishDirectory: '$(Build.SourcesDirectory)/publish'
     feedsToUsePublish: 'internal'
     vstsFeedPublish: 'f635c088-1047-40e8-8c29-2e3b05a38010/f955fae1-be95-4094-bf98-2e55fc5e5985'
     vstsFeedPackagePublish: 'frontend'
