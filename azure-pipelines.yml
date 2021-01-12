@@ -30,7 +30,7 @@ steps:
   displayName: Prepare Artifacts
   
 - task: UniversalPackages@0
-  condition: contains(variables['Build.SourceBranchName'], 'refs/tags')
+  condition: contains(variables['Build.SourceBranchName'], 'tags')
   inputs:
     command: 'publish'
     publishDirectory: '$(Build.SourcesDirectory)/publish'
