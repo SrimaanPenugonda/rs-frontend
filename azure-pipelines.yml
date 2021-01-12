@@ -11,9 +11,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'One1'
 
-- script: |
-    env
-  displayName: 'Two'
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    feedsToUsePublish: 'internal'
+    vstsFeedPublish: 'f635c088-1047-40e8-8c29-2e3b05a38010/f955fae1-be95-4094-bf98-2e55fc5e5985'
+    vstsFeedPackagePublish: 'frontend'
+    versionOption: 'patch'
