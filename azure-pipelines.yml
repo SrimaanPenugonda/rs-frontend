@@ -18,6 +18,7 @@ steps:
     targetType: 'inline'
     script: |
       env
+  displayName: Environment Command
 
 - task: Bash@3
   inputs:
@@ -25,6 +26,7 @@ steps:
     script: |
       mkdir publish
       cp -r static localhost.conf publish
+  displayName: Prepare Artifacts
   
 - task: UniversalPackages@0
   inputs:
@@ -34,3 +36,4 @@ steps:
     vstsFeedPublish: 'f635c088-1047-40e8-8c29-2e3b05a38010/f955fae1-be95-4094-bf98-2e55fc5e5985'
     vstsFeedPackagePublish: 'frontend'
     versionOption: 'patch'
+  displayName: Publish Artficats
