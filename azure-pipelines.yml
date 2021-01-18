@@ -39,4 +39,4 @@ steps:
     versionOption: 'custom'
     versionPublish: '$(Build.SourceBranchName)'
   displayName: Publish Artficats
-  condition: eq(variables['Build.SourceBranch'], 'refs/tags/*')
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
