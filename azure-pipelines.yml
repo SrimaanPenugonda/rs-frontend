@@ -26,7 +26,7 @@ steps:
     targetType: 'inline'
     script: |
       mkdir publish
-      cp -r static localhost.conf publish
+      cp -r static publish
   displayName: Prepare Artifacts
 
 - task: UniversalPackages@0
