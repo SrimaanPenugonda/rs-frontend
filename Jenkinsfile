@@ -1,7 +1,7 @@
 pipeline {
   agent any
 
-  stage {
+  stages {
 
     stage('Prepare Artifacts') {
       steps {
