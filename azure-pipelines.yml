@@ -14,13 +14,13 @@ pool:
 
 steps:
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      env
-  displayName: Environment Command
-
+- script: |
+    curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/sonar-scanner/install.sh | sudo bash
+  displayName: 'Setup Sonar Scanner'
+    
+- script: |
+    sonar-scanner -Dsonar.projectKey=payment -Dsonar.sources=. -Dsonar.host.url=http://52.91.45.74:9000 -Dsonar.login=de8afb42f8814e0f5a1f7bc59627fc6fdaa67bad 
+  displayName: 'Run Sonar Scan'    
 - task: Bash@3
   inputs:
     targetType: 'inline'
