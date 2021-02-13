@@ -6,7 +6,7 @@
 */
 
 var autoComplete = (function(){
-    // "use strict";
+     "use strict";
     function autoComplete(options){
         if (!document.querySelector) {
             return;
