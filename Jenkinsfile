@@ -3,6 +3,14 @@ pipeline {
 
   stages {
 
+    stage('Lint Check') {
+      steps {
+        sh '''
+          jslint '**/*.js'
+        '''
+      }
+    }
+
     stage('Prepare Artifacts') {
       steps {
         sh '''
