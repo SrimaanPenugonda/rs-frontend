@@ -14,7 +14,7 @@ pipeline {
     stage('Prepare Artifacts') {
       steps {
         sh '''
-          mkdir publish 
+          mkdir -p publish 
           cp -r static publish
         '''
       }
