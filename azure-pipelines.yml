@@ -20,7 +20,7 @@ steps:
       repository: 'rkalluru/d53-rs-frontend'
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
-      tags: 'latest'
+      tags: '$(Build.BuildNumber)'
 
 #- script: |
 #    curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/sonar-scanner/install.sh | sudo bash
