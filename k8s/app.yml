@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: rkalluru/d53-frontend:VERSION
+          image: rkalluru/d53-rs-frontend:VERSION
           ports:
             - containerPort: 80
 ---
