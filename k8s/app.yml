@@ -11,6 +11,8 @@ spec:
       app: frontend
   template:
     metadata:
+      annotations:
+        co.elastic.logs/enabled: "true"
       labels:
         app: frontend
     spec:
