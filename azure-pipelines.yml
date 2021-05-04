@@ -2,50 +2,39 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-#
+#tag branch
 
 trigger:
   branches:
-    include: [ "*" ] 
+    include: ["*"] #triggers with all changes in branch
   tags:
-    include: [ "*" ]
-pool:
-  vmImage: 'ubuntu-latest'
+    include: ["*"] # triggers with all changes and tagged them
+
+pool: Default  #self hosted pool
 
 steps:
-
-  - task: Docker@2
+  - task: Bash@3
     inputs:
-      containerRegistry: 'docker-hub'
-      repository: 'rkalluru/d53-rs-frontend'
-      command: 'buildAndPush'
-      Dockerfile: '**/Dockerfile'
-      tags: '$(Build.BuildId)'
+      targetType: 'inline'
+      script: 'env'
+    displayName: Env Command #this task helps to check the BUILD parameters
 
-#- script: |
-#    curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/sonar-scanner/install.sh | sudo bash
-#  displayName: 'Setup Sonar Scanner'
-#
-#- script: |
-#    sonar-scanner -Dsonar.projectKey=frontend -Dsonar.sources=. -Dsonar.host.url=http://52.91.45.74:9000 -Dsonar.login=de8afb42f8814e0f5a1f7bc59627fc6fdaa67bad  | tee /tmp/sonar.out
-#    sonar-quality-gate.sh admin admin123 52.91.45.74 $(grep 'task?id=' /tmp/sonar.out | awk -F = '{print $NF}') frontend
-#  displayName: 'Run Sonar Scan'
-#- task: Bash@3
-#  inputs:
-#    targetType: 'inline'
-#    script: |
-#      mkdir publish
-#      cp -r static publish
-#  displayName: Prepare Artifacts
-#
-#- task: UniversalPackages@0
-#  inputs:
-#    command: 'publish'
-#    publishDirectory: '$(Build.SourcesDirectory)/publish'
-#    feedsToUsePublish: 'internal'
-#    vstsFeedPublish: 'f635c088-1047-40e8-8c29-2e3b05a38010/f955fae1-be95-4094-bf98-2e55fc5e5985'
-#    vstsFeedPackagePublish: 'frontend'
-#    versionOption: 'custom'
-#    versionPublish: '$(Build.SourceBranchName)'
-#  displayName: Publish Artficats
-#  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+  - task: Bash@3
+    inputs:  #selected components or files will copy to publish dir..
+      targetType: 'inline'
+      script: |
+        mkdir publish
+        cp -r static publish
+    displayName: Prepare Artifacts
+
+  - task: UniversalPackages@0
+    condition: contains(variables['Build.SourceBranch'],'tags') #this condition helps to publish artifacts only when
+    inputs:   #publish frontend artifactory                     #tags , Build.SourceBranch
+      command: 'publish'
+      publishDirectory: '$(Build.SourcesDirectory)/publish'  # here download only publish directory
+      feedsToUsePublish: 'internal'
+      vstsFeedPublish: '736b4ce8-9eaf-495c-9983-ed63d9930834'
+      vstsFeedPackagePublish: 'frontend'
+      versionOption: 'custom'
+      versionPublish: '$(Build.SourceBranchName)'  #Artifact version will be picked from git tag
+    displayName: Publish Artifacts
