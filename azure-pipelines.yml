@@ -26,12 +26,12 @@ steps:
         mkdir publish
         cp -r static publish
     displayName: Prepare Artifacts
-
+  
   - task: UniversalPackages@0
     condition: contains(variables['Build.SourceBranch'],'tags') #this condition helps to publish artifacts only when
     inputs:   #publish frontend artifactory                     #tags , Build.SourceBranch
       command: 'publish'
-      publishDirectory: '$(Build.SourcesDirectory)/publish'  # here download only publish directory
+      publishDirectory: '$(Build.SourcesDirectory)/publish' # here download only publish directory
       feedsToUsePublish: 'internal'
       vstsFeedPublish: '736b4ce8-9eaf-495c-9983-ed63d9930834'
       vstsFeedPackagePublish: 'frontend'
