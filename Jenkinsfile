@@ -24,7 +24,7 @@ pipeline {
       steps {
         sh '''
           cd publish
-          az artifacts universal publish --organization https://dev.azure.com/DevOps-Batches/ --project="DevOps53" --scope project --feed devops53 --name frontend --version 0.0.21 --description "Welcome to Universal Packages" --path .
+az artifacts universal publish --organization https://dev.azure.com/srimaanaws2021/ --feed srimaanaws2021 --name rsfrontend --version 1.0.1 --description "Welcome to Universal Packages" --path .
         '''
       }
     }
