@@ -23,7 +23,7 @@ steps:
     inputs:  #selected components or files will copy to publish dir..
       targetType: 'inline'
       script: |
-        mkdir publish
+        mkdir $(Build.SourcesDirectory)/publish
         cp -r static publish
     displayName: Prepare Artifacts
   
