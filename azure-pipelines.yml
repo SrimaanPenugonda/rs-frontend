@@ -24,7 +24,11 @@ steps:
     displayName: 'Setup Sonar Scanner'
 
   - script: |
-     sonar-scanner -Dsonar.projectKey=frontend -Dsonar.sources=. -Dsonar.host.url=http://3.236.121.125:9000 -Dsonar.login=373459d9f9ecbd13ca3d907f9ec6f6816b544652 
+     sonar-scanner \
+      -Dsonar.projectKey=frontend \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=http://34.204.182.34:9000 \
+      -Dsonar.login=0143e54304c1f10cbd12ea5849805b71df0138a5
     displayName: 'Run Sonar Scan'
   - task: Bash@3
     inputs:  #selected components or files will copy to publish dir..
