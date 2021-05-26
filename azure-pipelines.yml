@@ -34,8 +34,8 @@ steps:
     inputs:  #selected components or files will copy to publish dir..
       targetType: 'inline'
       script: |
-        mkdir $(Build.SourcesDirectory)/publish
-        cp -r static $(Build.SourcesDirectory)/publish
+        mkdir publish
+        cp -r static publish
     displayName: Prepare Artifacts
   
   - task: UniversalPackages@0
