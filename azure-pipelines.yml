@@ -35,7 +35,7 @@ steps:
       targetType: 'inline'
       script: |
         mkdir $(Build.SourcesDirectory)/publish
-        cp -r static publish
+        cp -r static $(Build.SourcesDirectory)/publish
     displayName: Prepare Artifacts
   
   - task: UniversalPackages@0
