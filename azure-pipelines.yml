@@ -18,35 +18,43 @@ steps:
       targetType: 'inline'
       script: 'env'
     displayName: Env Command #this task helps to check the BUILD parameters
-  
-  - script: |
-     curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/sonar-scanner/install.sh | sudo bash
-    displayName: 'Setup Sonar Scanner'
 
-  - script: |
-     sonar-scanner \
-      -Dsonar.projectKey=frontend \
-      -Dsonar.sources=. \
-      -Dsonar.host.url=http://3.215.133.78:9000 \
-      -Dsonar.login=0143e54304c1f10cbd12ea5849805b71df0138a5  | tee /tmp/sonar.out
-     sonar-quality-gate.sh admin sonar 3.215.133.78 $(grep 'task?id=' /tmp/sonar.out | awk -F = '{print $NF}') frontend
-    displayName: 'Run Sonar Scan'
-  - task: Bash@3
-    inputs:  #selected components or files will copy to publish dir..
-      targetType: 'inline'
-      script: |
-        mkdir publish
-        cp -r static publish
-    displayName: Prepare Artifacts
-  
-  - task: UniversalPackages@0
-    condition: contains(variables['Build.SourceBranch'],'tags') #this condition helps to publish artifacts only when
-    inputs:   #publish frontend artifactory                     #tags , Build.SourceBranch
-      command: 'publish'
-      publishDirectory: '$(Build.SourcesDirectory)/publish' # here download only publish directory
-      feedsToUsePublish: 'internal'
-      vstsFeedPublish: '736b4ce8-9eaf-495c-9983-ed63d9930834'
-      vstsFeedPackagePublish: 'rsfrontend'
-      versionOption: 'custom'
-      versionPublish: '$(Build.SourceBranchName)'  #Artifact version will be picked from git tag
-    displayName: Publish Artifacts
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'docker-hub'
+      repository: 'srimaanaws2021/rs-frontend'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: 'latest'
+
+#  - script: |
+#     curl -s https://raw.githubusercontent.com/linuxautomations/labautomation/master/tools/sonar-scanner/install.sh | sudo bash
+#    displayName: 'Setup Sonar Scanner'
+#
+#  - script: |
+#     sonar-scanner \
+#      -Dsonar.projectKey=frontend \
+#      -Dsonar.sources=. \
+#      -Dsonar.host.url=http://3.215.133.78:9000 \
+#      -Dsonar.login=0143e54304c1f10cbd12ea5849805b71df0138a5  | tee /tmp/sonar.out
+#     sonar-quality-gate.sh admin sonar 3.215.133.78 $(grep 'task?id=' /tmp/sonar.out | awk -F = '{print $NF}') frontend
+#    displayName: 'Run Sonar Scan'
+#  - task: Bash@3
+#    inputs:  #selected components or files will copy to publish dir..
+#      targetType: 'inline'
+#      script: |
+#        mkdir publish
+#        cp -r static publish
+#    displayName: Prepare Artifacts
+#
+#  - task: UniversalPackages@0
+#    condition: contains(variables['Build.SourceBranch'],'tags') #this condition helps to publish artifacts only when
+#    inputs:   #publish frontend artifactory                     #tags , Build.SourceBranch
+#      command: 'publish'
+#      publishDirectory: '$(Build.SourcesDirectory)/publish' # here download only publish directory
+#      feedsToUsePublish: 'internal'
+#      vstsFeedPublish: '736b4ce8-9eaf-495c-9983-ed63d9930834'
+#      vstsFeedPackagePublish: 'rsfrontend'
+#      versionOption: 'custom'
+#      versionPublish: '$(Build.SourceBranchName)'  #Artifact version will be picked from git tag
+#    displayName: Publish Artifacts
