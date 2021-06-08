@@ -3,22 +3,21 @@ kind: Deployment
 metadata:
   name: frontend
   labels:
-    app: frontend
+    tier: frontend
 spec:
+  # modify replicas according to your case
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      tier: frontend
   template:
     metadata:
-      annotations:
-        co.elastic.logs/enabled: "true"
       labels:
-        app: frontend
+        tier: frontend #spec for replica set
     spec:
       containers:
         - name: frontend
-          image: rkalluru/d53-rs-frontend:VERSION
+          image: srimaanaws2021/rs-frontend:VERSION
           ports:
             - containerPort: 80
 ---
@@ -29,7 +28,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: frontend
+    tier: frontend
   ports:
     - protocol: TCP
       port: 80
