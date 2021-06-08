@@ -17,7 +17,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: 'env'
-    displayName: Env Command #this task helps to check the BUILD parameters
+    displayName: Env Command  #this task helps to check the BUILD parameters
 
   - task: Docker@2
     inputs:
