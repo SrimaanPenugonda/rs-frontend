@@ -10,7 +10,7 @@ trigger:
   tags:
     include: ["*"] # triggers with all changes and tagged them
 
-pool: Default  #self hosted pool
+pool: Default  #self hosted pool test
 
 steps:
   - task: Bash@3
